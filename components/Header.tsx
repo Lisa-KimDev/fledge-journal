@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const NAV = [
-  { href: "/", label: "Home" },
   { href: "/journal", label: "Journal" },
   { href: "/rule-zero", label: "Rule Zero" },
   { href: "/parents", label: "Parents" },
-  { href: "/follow", label: "Follow" },
 ];
 
 export function Header() {
@@ -23,14 +21,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b hairline bg-[#0B0B0D]/85 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-        {/* hamburger — left */}
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        {/* hamburger — left (mobile only; desktop gets inline nav) */}
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="-ml-2 rounded-md p-2 text-[#8A857A] transition-colors hover:text-[#F4EFE6]"
+          className="-ml-2 rounded-md p-2 text-[#8A857A] transition-colors hover:text-[#F4EFE6] lg:hidden"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             {open ? (
@@ -41,7 +39,7 @@ export function Header() {
           </svg>
         </button>
 
-        {/* wordmark — center */}
+        {/* wordmark — center on mobile, left on desktop */}
         <Link
           href="/"
           className="flex items-center gap-2"
@@ -53,6 +51,22 @@ export function Header() {
           </span>
         </Link>
 
+        {/* desktop nav — inline, no hamburger */}
+        <nav
+          aria-label="Site navigation"
+          className="hidden items-center gap-8 lg:flex"
+        >
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-[#8A857A] transition-colors hover:text-[#F4EFE6]"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
         {/* Follow CTA — right */}
         <Link
           href="/follow"
@@ -62,15 +76,15 @@ export function Header() {
         </Link>
       </div>
 
-      {/* slide-over nav */}
+      {/* slide-over nav — mobile only */}
       <div
-        className="nav-backdrop fixed inset-0 top-16 z-30 bg-black/60"
+        className="nav-backdrop fixed inset-0 top-16 z-30 bg-black/60 lg:hidden"
         data-open={open}
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
       <nav
-        className="slideover fixed top-16 bottom-0 left-0 z-40 w-72 border-r hairline bg-[#141417] px-6 py-8"
+        className="slideover fixed top-16 bottom-0 left-0 z-40 w-72 border-r hairline bg-[#141417] px-6 py-8 lg:hidden"
         data-open={open}
         aria-label="Site navigation"
         aria-hidden={!open}
@@ -79,7 +93,7 @@ export function Header() {
           The story so far
         </p>
         <ul className="space-y-1">
-          {NAV.map((item) => (
+          {[{ href: "/", label: "Home" }, ...NAV, { href: "/follow", label: "Follow" }].map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}

@@ -33,7 +33,7 @@ export default async function JournalPage({ searchParams }: JournalPageProps) {
   const hasMore = entries.length === PER_PAGE;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <header className="pt-12 pb-10 sm:pt-16">
         <p className="text-[11px] font-semibold tracking-[0.32em] text-[#E8B24A] uppercase">
           The incubator log

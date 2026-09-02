@@ -14,23 +14,28 @@ function EpLabel({ id }: { id: number }) {
 export function HeroEpisodeCard({ entry }: { entry: Entry }) {
   const art = thumbnailUrl(entry.thumbnail_path);
   return (
-    <article className="group overflow-hidden rounded-2xl border hairline bg-[#141417]">
-      <Link href={`/journal/${entry.slug}`} className="block">
+    <article className="group grid overflow-hidden rounded-2xl border hairline bg-[#141417] lg:grid-cols-[1.05fr_1fr]">
+      <Link
+        href={`/journal/${entry.slug}`}
+        className="block overflow-hidden"
+        aria-hidden="true"
+        tabIndex={-1}
+      >
         {art ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={art}
-            alt={`${entry.title} episode art`}
-            className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            alt=""
+            className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] lg:h-full lg:aspect-auto"
             loading="eager"
           />
         ) : (
-          <div className="flex aspect-[16/9] w-full items-center justify-center bg-[#141417]">
+          <div className="flex aspect-[16/9] w-full items-center justify-center bg-[#141417] lg:h-full lg:aspect-auto">
             <span className="day-numeral text-7xl font-semibold text-[#E8B24A]/30">{entry.id}</span>
           </div>
         )}
       </Link>
-      <div className="p-6 sm:p-8">
+      <div className="flex flex-col justify-center p-6 sm:p-8 lg:order-first">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <EpLabel id={entry.id} />
           <span className="text-xs tracking-wide text-[#8A857A]">{formatDate(entry.entry_date)}</span>
@@ -43,12 +48,12 @@ export function HeroEpisodeCard({ entry }: { entry: Entry }) {
             {entry.title}
           </Link>
         </h2>
-        <p className="mt-3 line-clamp-2 max-w-2xl leading-relaxed text-[#8A857A]">
+        <p className="mt-3 line-clamp-3 max-w-2xl leading-relaxed text-[#8A857A]">
           {entry.summary}
         </p>
         <Link
           href={`/journal/${entry.slug}`}
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#E8B24A] transition-colors hover:text-[#F4EFE6]"
+          className="mt-5 inline-flex items-center gap-2 self-start text-sm font-medium text-[#E8B24A] transition-colors hover:text-[#F4EFE6]"
         >
           Read the entry
           <span aria-hidden="true">→</span>
